@@ -10,8 +10,8 @@ white_protocol=["dict","http","https","smtp","telnet","ssh2","ogg","expect","lda
 
 # 需要解决的问题
 # 1、超时问题
-# 2、https的问题
-# 3、显示问题
+# 2、https的问题 get
+# 3、显示问题 get
 
 
 def is_white_protocol(protocol):
@@ -42,8 +42,6 @@ def requests_and_judge(ip,port,http_raw,reg_words,timeout,is_open,ssl):
                 print(str(ip) + "的端口" + str(port) + " is open\n")
     except:
         pass
-
-
 
 def create_requests(http_raw,ip,port,protocol):
     whole_url = protocol+"://"+str(ip)+":"+str(port)
@@ -115,6 +113,8 @@ if __name__ == '__main__':
     ssl = namespace.ssl
     if ssl:
         ssl=True
+    if is_open == "0":
+        is_open = False
     #
     #限制线程的最大数量
     sem = threading.Semaphore(int(threads))
@@ -127,6 +127,5 @@ if __name__ == '__main__':
             # ssrf_port_scan(http_raw,ip,port,reg_words,protocol,timeout,is_open)
             # 开启多线程
             threading.Thread(target=ssrf_port_scan,args=(http_raw,ip,port,reg_words,protocol,timeout,is_open,ssl)).start()
-
     #多线程
     # print(read_http_raw("123.txt"))
